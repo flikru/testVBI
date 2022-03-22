@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Тестовые задания</title>
+
+        <style>
+            .block{
+                border: 1px solid #000;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 100px;
+                width: 100px;
+                height: 100px;
+                box-sizing: border-box;
+                font-size: 36px;
+                display: inline-block;
+                margin-right: 5px;
+                margin-bottom: 5px;
+                cursor: pointer;
+
+            }
+            .popup{
+                width: 500px;
+                height: 300px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                background: #BABABAFF;
+                margin-top: -150px;
+                margin-left: -250px;
+                border-radius: 10px;
+                opacity:0;
+                transition: 1s;
+                z-index: 1000;
+            }
+            h1{
+                margin: 20px;
+            }
+            .close{
+                position: absolute;
+                right: 15px;
+                top: 10px;
+                cursor: pointer;
+            }
+            .back_fone{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                background: #ffffff;
+                display: none;
+                left: 0px;
+                top: 0px;
+                z-index: 0;
+            }
+            input[type='button']{
+                border: 0px;
+                background: #7b7b7b;
+                color: #ffffff;
+                border-radius: 20px;
+                padding: 10px;
+                text-transform: uppercase;
+                text-decoration: bold;
+                cursor: pointer;
+
+            }
+        </style>
+
+
+    </head>
+    <body>
+        <div class="container_1">
+            <div class='block'>1</div><div class='block'>2</div><div class='block'>3</div><div class='block'>4</div>
+        </div>
+
+        <br>
+
+        <div class="container_2">
+            <div>
+                <input type="checkbox" id="check" name="scales" onchange="replace_color()">
+                <label for="check">Сменить цвет</label>
+            </div>
+        </div>
+
+        <br>
+
+        <input type="button" id="add_box" value="Добавить квадрат" onclick="add_block()">
+
+            <div class="popup" id="popup">
+                <h1 id="name_block"></h1>
+                <div class="close" id="close" onclick="close_popup()">x</div>
+            </div>
+
+        <div class="back_fone" id="backfon" onclick="close_popup()">
+
+        </div>
+    </body>
+
+    <script type="text/javascript">
+
+        function close_popup(){
+            document.getElementById("popup").style.opacity = 0;
+            document.getElementById('backfon').style.display = 'none';
+        }
+
+        //задание №2 замена четных блоков
+        function replace_color(){
+            var cheсkbox_1 = document.getElementById('check');
+            var elem = document.getElementsByClassName('block'), i = elem.length;
+            while(i--){
+                if(cheсkbox_1.checked){
+                    if(i % 2==1){
+                        elem[i].style.background = '#919191';
+                        elem[i].style.color = '#fff';
+                    }
+                }else{
+                    elem[i].style.background = '#fff';
+                    elem[i].style.color = '#000';
+                }
+            }
+
+        }
+
+        //Добавление блока
+        function add_block(){
+            var content = document.querySelector('div.container_1');
+
+                var blocks = document.getElementsByClassName('block');
+                i = blocks.length;
+                let div = document.createElement('div');
+                div.className = "block";
+                div.innerHTML = i+1;
+                var firstElem = content.lastChild;
+                content.insertBefore(div,firstElem);
+                replace_color();
+                reload_popup();
+        }
+
+
+
+        function reload_popup(){
+            var elem = document.getElementsByClassName('block'), i = elem.length;
+            var popup = document.getElementById('popup');
+            var backfon = document.getElementById('backfon');
+            while(i--){
+                elem[i].onclick = function(i){
+                    return function(){
+                        popup.style.display = 'block';
+                        backfon.style.display = 'block';
+                        popup.style.opacity = 1;
+                        document.getElementById('name_block').textContent = this.textContent;
+                    };
+                }(i);
+            }
+
+        }
+
+        window.onload = function() {
+            //задание №3 всплывающий попап
+            reload_popup();
+        }
+    </script>
+
+</html>
