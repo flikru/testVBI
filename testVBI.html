@@ -10,9 +10,6 @@
                 border: 1px solid #000;
                 text-align: center;
                 vertical-align: middle;
-                line-height: 100px;
-                width: 100px;
-                height: 100px;
                 box-sizing: border-box;
                 font-size: 36px;
                 display: inline-block;
@@ -72,7 +69,7 @@
     </head>
     <body>
         <div class="container_1">
-            <div class='block'>1</div><div class='block'>2</div><div class='block'>3</div><div class='block'>4</div>
+            <div class='block'>1фыпфыпы</div><div class='block'>2</div><div class='block'>3125125125</div><div class='block'>4</div>
         </div>
 
         <br>
@@ -136,6 +133,7 @@
                 content.insertBefore(div,firstElem);
                 replace_color();
                 reload_popup();
+                cube_box();
         }
 
 
@@ -154,12 +152,33 @@
                     };
                 }(i);
             }
+            cube_box()
+        }
+        
+        //Подгон квадрата под содержимое div
+        function cube_box(){
+            var elem = document.getElementsByClassName('block'), i = elem.length;
+            while(i--){
+                        var width_box = elem[i].offsetWidth;
+                        var height_box = elem[i].offsetHeight;
+                        if(width_box>height_box){
+                            elem[i].style.height = width_box+'px';
+                            elem[i].style.lineHeight = width_box+'px';
+                            elem[i].style.width = width_box+'px';
+                        }else{
+                            elem[i].style.width = height_box+'px';
+                            elem[i].style.height = height_box+'px';
+                            elem[i].style.lineHeight = height_box+'px';
+                        }
+                console.log(width_box);
+                console.log(height_box);
+                }(i);
 
         }
-
         window.onload = function() {
             //задание №3 всплывающий попап
             reload_popup();
+            cube_box()
         }
     </script>
 
